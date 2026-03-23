@@ -16,7 +16,7 @@
         <div class="table-responsive">
             <table id="ordersTable" class="table table-hover align-middle mb-0">
                 <thead class="table-light">
-                    <tr><th>#</th><th>Order No.</th><th>Customer ID</th><th>Total</th><th>Discount</th><th>Final</th><th>Payment</th><th>Order Status</th><th>Method</th><th>Placed At</th><th class="text-end">Actions</th></tr>
+                    <tr><th>#</th><th>Order No.</th><th>Customer</th><th>Total</th><th>Discount</th><th>Final</th><th>Payment</th><th>Order Status</th><th>Method</th><th>Placed At</th><th class="text-end">Actions</th></tr>
                 </thead>
                 <tbody>
                 <?php if (empty($orders)): ?>
@@ -28,7 +28,7 @@
                     <tr>
                         <td class="text-muted small"><?= $idx + 1 ?></td>
                         <td class="fw-medium"><code><?= e($o['order_number'] ?? '—') ?></code></td>
-                        <td><span class="badge bg-light text-dark border"><?= $o['customer_id'] ?></span></td>
+                        <td><span class="badge bg-light text-dark border"><?= e($o['customer']['full_name'] ?? '') ?></span></td>
                         <td><?= number_format((float)($o['total_amount'] ?? 0), 2) ?></td>
                         <td class="text-muted"><?= number_format((float)($o['discount_amount'] ?? 0), 2) ?></td>
                         <td class="fw-semibold"><?= number_format((float)($o['final_amount'] ?? 0), 2) ?></td>

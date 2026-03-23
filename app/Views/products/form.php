@@ -90,8 +90,42 @@ ob_start();
                 </div>
             </div>
 
+            <hr class="my-4">
+            <h5 class="mb-3">Product Media</h5>
+            
+            <div class="mb-3">
+                <input type="file" id="mediaUpload" class="form-control" accept=".png,.jpg,.jpeg,.mp4" multiple>
+                <div class="form-text">Accepted format: png, jpg, jpeg, mp4 (Max 10MB)</div>
+            </div>
+
+            <div id="mediaPreviews" class="d-flex flex-wrap gap-3">
+                <?php if (!empty($product['media'])): ?>
+                    <?php foreach ($product['media'] as $media): ?>
+                        <div class="position-relative border rounded p-2" id="media-<?= $media['id'] ?>" style="width: 140px;">
+                            <input type="hidden" name="media_ids[]" value="<?= $media['id'] ?>">
+                            <?php $vUrl = API_BASE . '/media/' . $media['id'] . '/view'; ?>
+                            <?php if (in_array(strtolower($media['extension']), ['mp4'])): ?>
+                                <video src="<?= $vUrl ?>" class="w-100 rounded" style="height: 100px; object-fit: cover;" controls></video>
+                            <?php else: ?>
+                                <img src="<?= $vUrl ?>" class="w-100 rounded" style="height: 100px; object-fit: cover;">
+                            <?php endif; ?>
+                            
+                            <div class="mt-2 text-center">
+                                <div class="form-check form-check-inline me-0">
+                                    <input class="form-check-input" type="radio" name="primary_media_id" id="pri-<?= $media['id'] ?>" value="<?= $media['id'] ?>" <?= !empty($media['pivot']['is_primary']) ? 'checked' : '' ?>>
+                                    <label class="form-check-label small" for="pri-<?= $media['id'] ?>">Primary</label>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1 rounded-circle" onclick="deleteMedia(<?= $media['id'] ?>)">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+
             <div class="d-flex gap-2 mt-4">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" id="btnSubmit">
                     <i class="bi bi-check-lg me-1"></i> <?= $isEdit ? 'Update' : 'Create' ?> Product
                 </button>
                 <a href="<?= url('products') ?>" class="btn btn-outline-secondary">Cancel</a>
@@ -100,6 +134,93 @@ ob_start();
     </div>
 </div>
 <?php
+$token = $_SESSION['token'] ?? '';
+$uploadUrl = API_BASE . '/media/upload';
+$viewUrl = API_BASE . '/media/';
+$buttonText = $isEdit ? 'Update' : 'Create';
+$apiBase = API_BASE;
+$scripts = <<<HTML
+<script>
+$(function() {
+    const token = '{$token}';
+    const JS_API_BASE = '{$apiBase}';
+    let isUploading = false;
+    
+    $('#mediaUpload').on('change', async function(e) {
+        if (!e.target.files.length) return;
+        
+        isUploading = true;
+        $('#btnSubmit').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Uploading...');
+        
+        for (let file of e.target.files) {
+            let formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                let res = await fetch('{$uploadUrl}', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token },
+                    body: formData
+                });
+                
+                let json = await res.json();
+                
+                if (json.success) {
+                    let media = json.data;
+                    let isVideo = ['mp4'].includes(media.extension.toLowerCase());
+                    let preview = isVideo ? 
+                        `<video src="{$viewUrl}\${media.id}/view" class="w-100 rounded" style="height: 100px; object-fit: cover;" controls></video>` :
+                        `<img src="{$viewUrl}\${media.id}/view" class="w-100 rounded" style="height: 100px; object-fit: cover;">`;
+                        
+                    let html = `
+                        <div class="position-relative border rounded p-2" id="media-\${media.id}" style="width: 140px;">
+                            <input type="hidden" name="media_ids[]" value="\${media.id}">
+                            \${preview}
+                            <div class="mt-2 text-center">
+                                <div class="form-check form-check-inline me-0">
+                                    <input class="form-check-input" type="radio" name="primary_media_id" id="pri-\${media.id}" value="\${media.id}">
+                                    <label class="form-check-label small" for="pri-\${media.id}">Primary</label>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1 rounded-circle" onclick="deleteMedia(\${media.id})">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                    `;
+                    $('#mediaPreviews').append(html);
+                } else {
+                    alert('Failed to upload ' + file.name + ': ' + (json.message || 'Unknown error'));
+                }
+            } catch (err) {
+                alert('Error uploading ' + file.name);
+            }
+        }
+        
+        $('#mediaUpload').val('');
+        isUploading = false;
+        $('#btnSubmit').prop('disabled', false).html('<i class="bi bi-check-lg me-1"></i> {$buttonText} Product');
+    });
+});
+
+window.deleteMedia = async function(id) {
+    if(!confirm('Are you sure you want to remove this media?')) return;
+    
+    // Optionally delete from server too
+    try {
+        const token = '{$token}';
+        const JS_API_BASE = '{$apiBase}';
+        await fetch(JS_API_BASE + '/media/' + id + '/delete', {
+            method: 'DELETE',
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+    } catch(e) {}
+    
+    $('#media-' + id).remove();
+};
+</script>
+HTML;
+
 clearOld();
 $content = ob_get_clean();
 require APP . '/Views/layouts/app.php';
+

@@ -65,3 +65,21 @@ function setOld(array $data): void {
 function clearOld(): void {
     unset($_SESSION['old']);
 }
+
+function hasPermission(string $page): bool {
+    $user = authUser();
+    if (empty($user)) return false;
+
+    $pages = $user['access_pages'] ?? [];
+    if (in_array('*', $pages)) return true;
+    
+    return in_array($page, $pages);
+}
+
+function requirePermission(string $page): void {
+    requireAuth();
+    if (!hasPermission($page)) {
+        setFlash('danger', 'You do not have permission to access ' . e($page) . '.');
+        redirect('dashboard');
+    }
+}

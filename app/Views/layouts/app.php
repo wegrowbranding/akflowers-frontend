@@ -184,100 +184,134 @@
             </a>
         </li>
 
+        <?php if (hasPermission('Categories')): ?>
         <!-- Categories -->
         <li>
             <a href="<?= url('categories') ?>" class="nav-link <?= isActive('categories') ?>">
                 <i class="bi bi-tags-fill"></i> Categories
             </a>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Products')): ?>
         <!-- Products -->
         <li>
             <a href="<?= url('products') ?>" class="nav-link <?= isActive('products') ?>">
                 <i class="bi bi-box-seam-fill"></i> Products
             </a>
         </li>
+        <?php endif; ?>
 
         <!-- Branch Section -->
+        <?php if (hasPermission('Branches') || hasPermission('Branch Admins') || hasPermission('Branch Roles') || hasPermission('Branch Staff')): ?>
         <li class="mt-3 mb-1 px-2">
             <span style="font-size:.7rem;font-weight:700;color:#475569">Branch</span>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Branches')): ?>
         <li>
             <a href="<?= url('branches') ?>" class="nav-link <?= isActive('branches') ?>">
                 <i class="bi bi-building"></i> Branches
             </a>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Branch Admins')): ?>
         <li>
             <a href="<?= url('branch-admins') ?>" class="nav-link <?= isActive('branch-admins') ?>">
                 <i class="bi bi-person-badge-fill"></i> Branch Admins
             </a>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Branch Roles')): ?>
         <li>
             <a href="<?= url('branch-roles') ?>" class="nav-link <?= isActive('branch-roles') ?>">
                 <i class="bi bi-shield-fill"></i> Roles
             </a>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Branch Staff')): ?>
         <li>
             <a href="<?= url('branch-staff') ?>" class="nav-link <?= isActive('branch-staff') ?>">
                 <i class="bi bi-people-fill"></i> Staff
             </a>
         </li>
+        <?php endif; ?>
 
         <!-- Commerce Section -->
+        <?php if (hasPermission('Orders') || hasPermission('Payments') || hasPermission('Customers') || hasPermission('Customer Addresses') || hasPermission('Coupons') || hasPermission('Carts') || hasPermission('Reviews')): ?>
         <li class="mt-3 mb-1 px-2">
             <span style="font-size:.7rem;font-weight:700;color:#475569">Commerce</span>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Orders')): ?>
         <li>
             <a href="<?= url('orders') ?>" class="nav-link <?= isActive(['orders', 'order-details']) ?>">
                 <i class="bi bi-receipt"></i> Orders
             </a>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Payments')): ?>
         <li>
             <a href="<?= url('payments') ?>" class="nav-link <?= isActive('payments') ?>">
                 <i class="bi bi-credit-card-fill"></i> Payments
             </a>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Customers')): ?>
         <li>
             <a href="<?= url('customers') ?>" class="nav-link <?= isActive('customers') ?>">
                 <i class="bi bi-people"></i> Customers
             </a>
         </li>
+        <?php endif; ?>
+
+        <?php if (hasPermission('Customer Addresses')): ?>
         <li>
             <a href="<?= url('customer-addresses') ?>" class="nav-link <?= isActive('customer-addresses') ?>">
                 <i class="bi bi-geo-alt-fill"></i> Customer Address
             </a>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Coupons')): ?>
         <li>
             <a href="<?= url('coupons') ?>" class="nav-link <?= isActive('coupons') ?>">
                 <i class="bi bi-ticket-perforated-fill"></i> Coupons
             </a>
         </li>
+        <?php endif; ?>
 
+        <!-- Wait, 'Carts', 'Wishlists' aren't strictly in access_pages or yes? I'll check if they are in config/app.php -->
+        <?php if (hasPermission('Carts')): ?>
         <li>
             <a href="<?= url('carts') ?>" class="nav-link <?= isActive('carts') ?>">
                 <i class="bi bi-cart-fill"></i> Carts
             </a>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Wishlists')): ?>
         <li>
             <a href="<?= url('wishlists') ?>" class="nav-link <?= isActive('wishlists') ?>">
                 <i class="bi bi-heart-fill"></i> Wishlists
             </a>
         </li>
+        <?php endif; ?>
 
+        <?php if (hasPermission('Reviews')): ?>
         <li>
             <a href="<?= url('reviews') ?>" class="nav-link <?= isActive('reviews') ?>">
                 <i class="bi bi-star-fill"></i> Reviews
             </a>
         </li>
+        <?php endif; ?>
 
     </ul>
 

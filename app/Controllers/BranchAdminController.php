@@ -85,7 +85,7 @@ class BranchAdminController extends Controller {
         ];
         $password = trim($_POST['password'] ?? '');
         if ($requirePassword || $password !== '') {
-            $data['password_hash'] = $password;
+            $data['password'] = $password;
         }
         return $data;
     }

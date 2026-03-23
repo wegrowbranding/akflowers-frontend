@@ -28,7 +28,7 @@
                         <th>Full Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Branch ID</th>
+                        <th>Branch</th>
                         <th>Last Login</th>
                         <th>Status</th>
                         <th class="text-end">Actions</th>
@@ -44,7 +44,7 @@
                         <td><?= e($a['full_name'] ?? '—') ?></td>
                         <td><?= e($a['email'] ?? '—') ?></td>
                         <td><?= e($a['phone'] ?? '—') ?></td>
-                        <td><span class="badge bg-light text-dark border"><?= $a['branch_id'] ?? '—' ?></span></td>
+                        <td><span class="badge bg-light text-dark border"><?= e($a['branch']['branch_name'] ?? $a['branch_id'] ?? '—') ?></span></td>
                         <td class="text-muted small"><?= $a['last_login'] ? date('d M Y', strtotime($a['last_login'])) : '—' ?></td>
                         <td>
                             <?php

@@ -3,19 +3,21 @@ $title = 'Dashboard';
 ob_start();
 
 $modules = [
-    ['key' => 'categories',         'label' => 'Categories',         'icon' => 'bi-tags-fill',           'color' => 'primary',   'url' => 'categories'],
-    ['key' => 'products',           'label' => 'Products',           'icon' => 'bi-box-seam-fill',        'color' => 'success',   'url' => 'products'],
-    ['key' => 'branches',           'label' => 'Branches',           'icon' => 'bi-building-fill',        'color' => 'info',      'url' => 'branches'],
-    ['key' => 'branch_admins',      'label' => 'Branch Admins',      'icon' => 'bi-person-badge-fill',    'color' => 'warning',   'url' => 'branch-admins'],
-    ['key' => 'branch_roles',       'label' => 'Branch Roles',       'icon' => 'bi-shield-fill',          'color' => 'secondary', 'url' => 'branch-roles'],
-    ['key' => 'branch_staff',       'label' => 'Branch Staff',       'icon' => 'bi-people-fill',          'color' => 'dark',      'url' => 'branch-staff'],
-    ['key' => 'customers',          'label' => 'Customers',          'icon' => 'bi-person-fill',          'color' => 'primary',   'url' => 'customers'],
-    ['key' => 'customer_addresses', 'label' => 'Addresses',          'icon' => 'bi-geo-alt-fill',         'color' => 'success',   'url' => 'customer-addresses'],
-    ['key' => 'orders',             'label' => 'Orders',             'icon' => 'bi-cart-fill',            'color' => 'danger',    'url' => 'orders'],
-    ['key' => 'payments',           'label' => 'Payments',           'icon' => 'bi-credit-card-fill',     'color' => 'info',      'url' => 'payments'],
-    ['key' => 'coupons',            'label' => 'Coupons',            'icon' => 'bi-ticket-perforated-fill','color' => 'warning',  'url' => 'coupons'],
-    ['key' => 'reviews',            'label' => 'Reviews',            'icon' => 'bi-star-fill',            'color' => 'secondary', 'url' => 'reviews'],
+    ['key' => 'categories',         'label' => 'Categories',         'icon' => 'bi-tags-fill',           'color' => 'primary',   'url' => 'categories', 'perm' => 'Categories'],
+    ['key' => 'products',           'label' => 'Products',           'icon' => 'bi-box-seam-fill',        'color' => 'success',   'url' => 'products', 'perm' => 'Products'],
+    ['key' => 'branches',           'label' => 'Branches',           'icon' => 'bi-building-fill',        'color' => 'info',      'url' => 'branches', 'perm' => 'Branches'],
+    ['key' => 'branch_admins',      'label' => 'Branch Admins',      'icon' => 'bi-person-badge-fill',    'color' => 'warning',   'url' => 'branch-admins', 'perm' => 'Branch Admins'],
+    ['key' => 'branch_roles',       'label' => 'Branch Roles',       'icon' => 'bi-shield-fill',          'color' => 'secondary', 'url' => 'branch-roles', 'perm' => 'Branch Roles'],
+    ['key' => 'branch_staff',       'label' => 'Branch Staff',       'icon' => 'bi-people-fill',          'color' => 'dark',      'url' => 'branch-staff', 'perm' => 'Branch Staff'],
+    ['key' => 'customers',          'label' => 'Customers',          'icon' => 'bi-person-fill',          'color' => 'primary',   'url' => 'customers', 'perm' => 'Customers'],
+    ['key' => 'customer_addresses', 'label' => 'Addresses',          'icon' => 'bi-geo-alt-fill',         'color' => 'success',   'url' => 'customer-addresses', 'perm' => 'Customer Addresses'],
+    ['key' => 'orders',             'label' => 'Orders',             'icon' => 'bi-cart-fill',            'color' => 'danger',    'url' => 'orders', 'perm' => 'Orders'],
+    ['key' => 'payments',           'label' => 'Payments',           'icon' => 'bi-credit-card-fill',     'color' => 'info',      'url' => 'payments', 'perm' => 'Payments'],
+    ['key' => 'coupons',            'label' => 'Coupons',            'icon' => 'bi-ticket-perforated-fill','color' => 'warning',  'url' => 'coupons', 'perm' => 'Coupons'],
+    ['key' => 'reviews',            'label' => 'Reviews',            'icon' => 'bi-star-fill',            'color' => 'secondary', 'url' => 'reviews', 'perm' => 'Reviews'],
 ];
+
+$modules = array_filter($modules, fn($m) => hasPermission($m['perm']));
 
 $orderStatusColors = [
     'pending'    => 'warning',
@@ -163,7 +165,7 @@ $orderStatusColors = [
                                                 <?= e($o['order_number'] ?? '#' . $o['id']) ?>
                                             </a>
                                         </td>
-                                        <td>$<?= number_format((float)($o['final_amount'] ?? 0), 2) ?></td>
+                                        <td>₹<?= number_format((float)($o['final_amount'] ?? 0), 2) ?></td>
                                         <td><span class="badge bg-<?= $sc ?> text-capitalize"><?= e($o['order_status'] ?? '') ?></span></td>
                                         <td><span class="badge bg-<?= $o['payment_status'] === 'paid' ? 'success' : 'warning' ?> text-capitalize"><?= e($o['payment_status'] ?? '') ?></span></td>
                                     </tr>

@@ -40,6 +40,8 @@ class ProductController extends Controller {
             'description'    => trim($_POST['description'] ?? ''),
             'status'         => $_POST['status'] ?? 'active',
             'created_by'     => userId(),
+            'media_ids'      => $_POST['media_ids'] ?? [],
+            'primary_media_id' => (int)($_POST['primary_media_id'] ?? 0),
         ];
 
         $res = ApiClient::post('/products/add', $data, true);
@@ -88,6 +90,8 @@ class ProductController extends Controller {
             'unit'           => trim($_POST['unit'] ?? ''),
             'description'    => trim($_POST['description'] ?? ''),
             'status'         => $_POST['status'] ?? 'active',
+            'media_ids'      => $_POST['media_ids'] ?? [],
+            'primary_media_id' => (int)($_POST['primary_media_id'] ?? 0),
         ];
 
         $res = ApiClient::put("/products/{$id}/edit", $data, true);

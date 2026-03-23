@@ -26,7 +26,7 @@
                         <th>#</th>
                         <th>Role Name</th>
                         <th>Description</th>
-                        <th>Branch ID</th>
+                        <th>Branch</th>
                         <th>Default</th>
                         <th>Status</th>
                         <th class="text-end">Actions</th>
@@ -40,7 +40,7 @@
                         <td class="text-muted small"><?= $idx + 1 ?></td>
                         <td class="fw-medium"><?= e($r['role_name']) ?></td>
                         <td class="text-muted small"><?= e(mb_strimwidth($r['role_description'] ?? '', 0, 60, '…')) ?></td>
-                        <td><span class="badge bg-light text-dark border"><?= $r['branch_id'] ?? '—' ?></span></td>
+                        <td><span class="badge bg-light text-dark border"><?= e($r['branch']['branch_name'] ?? $r['branch_id'] ?? '—') ?></span></td>
                         <td>
                             <?php if ($r['is_default']): ?>
                                 <span class="badge bg-primary">Default</span>

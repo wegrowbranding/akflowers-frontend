@@ -35,6 +35,7 @@ ob_start();
                 <thead class="table-light">
                     <tr>
                         <th>#</th>
+                        <th>Media</th>
                         <th>Code</th>
                         <th>Name</th>
                         <th>Category</th>
@@ -48,11 +49,34 @@ ob_start();
                 </thead>
                 <tbody>
                 <?php if (empty($products)): ?>
-                    <tr><td colspan="10" class="text-center text-muted py-4">No products found.</td></tr>
+                    <tr><td colspan="11" class="text-center text-muted py-4">No products found.</td></tr>
                 <?php else: ?>
                     <?php foreach ($products as $idx => $p): ?>
                     <tr>
                         <td class="text-muted small"><?= $idx + 1 ?></td>
+                        <td>
+                            <?php 
+                                $primary = null;
+                                if (!empty($p['media'])) {
+                                    foreach ($p['media'] as $m) {
+                                        if (!empty($m['pivot']['is_primary'])) { $primary = $m; break; }
+                                    }
+                                    if (!$primary) $primary = $p['media'][0];
+                                }
+                            ?>
+                            <?php if ($primary): ?>
+                                <?php $viewApi = API_BASE . '/media/' . $primary['id'] . '/view'; ?>
+                                <?php if (in_array(strtolower($primary['extension']), ['mp4'])): ?>
+                                    <video src="<?= $viewApi ?>" style="width: 40px; height: 40px; object-fit: cover;" class="rounded bg-light border" muted></video>
+                                <?php else: ?>
+                                    <img src="<?= $viewApi ?>" style="width: 40px; height: 40px; object-fit: cover;" class="rounded bg-light border">
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <div style="width: 40px; height: 40px;" class="rounded bg-light border d-flex align-items-center justify-content-center text-muted">
+                                    <i class="bi bi-image"></i>
+                                </div>
+                            <?php endif; ?>
+                        </td>
                         <td><code><?= e($p['product_code']) ?></code></td>
                         <td class="fw-medium"><?= e($p['product_name']) ?></td>
                         <td><?= e($p['category']['category_name'] ?? '—') ?></td>

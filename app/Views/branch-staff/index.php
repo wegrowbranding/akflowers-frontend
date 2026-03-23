@@ -29,8 +29,8 @@
                         <th>Full Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Branch ID</th>
-                        <th>Role ID</th>
+                        <th>Branch</th>
+                        <th>Role</th>
                         <th>Joined</th>
                         <th>Status</th>
                         <th class="text-end">Actions</th>
@@ -47,8 +47,8 @@
                         <td><?= e($u['full_name'] ?? '—') ?></td>
                         <td><?= e($u['email'] ?? '—') ?></td>
                         <td><?= e($u['phone'] ?? '—') ?></td>
-                        <td><span class="badge bg-light text-dark border"><?= $u['branch_id'] ?? '—' ?></span></td>
-                        <td><span class="badge bg-light text-dark border"><?= $u['role_id'] ?? '—' ?></span></td>
+                        <td><span class="badge bg-light text-dark border"><?= e($u['branch']['branch_name'] ?? $u['branch_id'] ?? '—') ?></span></td>
+                        <td><span class="badge bg-light text-dark border"><?= e($u['role']['role_name'] ?? $u['role_id'] ?? '—') ?></span></td>
                         <td class="text-muted small"><?= $u['date_of_joining'] ? date('d M Y', strtotime($u['date_of_joining'])) : '—' ?></td>
                         <td>
                             <?php

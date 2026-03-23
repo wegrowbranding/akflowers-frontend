@@ -16,7 +16,7 @@
         <div class="table-responsive">
             <table id="addressesTable" class="table table-hover align-middle mb-0">
                 <thead class="table-light">
-                    <tr><th>#</th><th>Customer ID</th><th>Name</th><th>Phone</th><th>City</th><th>State</th><th>Pincode</th><th>Default</th><th class="text-end">Actions</th></tr>
+                    <tr><th>#</th><th>Customer</th><th>Name</th><th>Phone</th><th>City</th><th>State</th><th>Pincode</th><th>Default</th><th class="text-end">Actions</th></tr>
                 </thead>
                 <tbody>
                 <?php if (empty($addresses)): ?>
@@ -24,7 +24,7 @@
                 <?php else: foreach ($addresses as $idx => $a): ?>
                     <tr>
                         <td class="text-muted small"><?= $idx + 1 ?></td>
-                        <td><span class="badge bg-light text-dark border"><?= $a['customer_id'] ?></span></td>
+                        <td><span class="badge bg-light text-dark border"><?= e($a['customer']['full_name'] ?? '') ?></span></td>
                         <td class="fw-medium"><?= e($a['name'] ?? '—') ?></td>
                         <td><?= e($a['phone'] ?? '—') ?></td>
                         <td><?= e($a['city'] ?? '—') ?></td>
