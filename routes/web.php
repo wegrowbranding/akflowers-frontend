@@ -122,3 +122,7 @@ $router->post('wishlists/create',       'WishlistController@store');
 $router->get('wishlists/{id}/edit',     'WishlistController@edit');
 $router->post('wishlists/{id}/edit',    'WishlistController@update');
 $router->post('wishlists/{id}/delete',  'WishlistController@destroy');
+
+// Notifications
+$router->get('notifications',            'NotificationController@index');
+$router->post('notifications/send',      'NotificationController@send');

@@ -313,6 +313,15 @@
         </li>
         <?php endif; ?>
 
+        <li class="mt-3 mb-1 px-2">
+            <span style="font-size:.7rem;font-weight:700;color:#475569">Marketing</span>
+        </li>
+        <li>
+            <a href="<?= url('notifications') ?>" class="nav-link <?= isActive('notifications') ?>">
+                <i class="bi bi-broadcast"></i> Broadcast
+            </a>
+        </li>
+
     </ul>
 
     <a href="<?= url('auth/logout') ?>" class="btn btn-danger w-100 mt-3 d-flex align-items-center justify-content-center gap-2">
