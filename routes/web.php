@@ -19,6 +19,14 @@ $router->get('categories/{id}/edit','CategoryController@edit');
 $router->post('categories/{id}/edit','CategoryController@update');
 $router->post('categories/{id}/delete','CategoryController@destroy');
 
+// Banners
+$router->get('banners',            'BannerController@index');
+$router->get('banners/create',     'BannerController@create');
+$router->post('banners/create',    'BannerController@store');
+$router->get('banners/{id}/edit',  'BannerController@edit');
+$router->post('banners/{id}/edit', 'BannerController@update');
+$router->post('banners/{id}/delete','BannerController@destroy');
+
 // Products
 $router->get('products',            'ProductController@index');
 $router->get('products/create',     'ProductController@create');

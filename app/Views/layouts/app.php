@@ -321,6 +321,13 @@
                 <i class="bi bi-broadcast"></i> Broadcast
             </a>
         </li>
+        <?php if (hasPermission('Banners')): ?>
+        <li>
+            <a href="<?= url('banners') ?>" class="nav-link <?= isActive('banners') ?>">
+                <i class="bi bi-image-fill"></i> Banners
+            </a>
+        </li>
+        <?php endif; ?>
 
     </ul>
 

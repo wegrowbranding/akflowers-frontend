@@ -11,7 +11,7 @@ class DashboardController extends Controller {
             'branches'           => '/branches/list',
             'branch_admins'      => '/branch-admins/list',
             'branch_roles'       => '/branch-roles/list',
-            'branch_staff'       => '/branch-staff/list',
+            'branch_staff'       => '/branch-staff-users/list',
             'customers'          => '/customers/list',
             'customer_addresses' => '/customer-addresses/list',
             'orders'             => '/orders/list',
