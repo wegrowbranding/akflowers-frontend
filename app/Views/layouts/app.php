@@ -329,6 +329,41 @@
         </li>
         <?php endif; ?>
 
+        <!-- Delivery Section -->
+        <li class="mt-3 mb-1 px-2">
+            <span style="font-size:.7rem;font-weight:700;color:#475569">Delivery</span>
+        </li>
+
+        <li>
+            <a href="<?= url('delivery-staff') ?>" class="nav-link <?= isActive('delivery-staff') ?>">
+                <i class="bi bi-person-badge"></i> Delivery Staff
+            </a>
+        </li>
+
+        <li>
+            <a href="<?= url('delivery-assignments') ?>" class="nav-link <?= isActive('delivery-assignments') ?>">
+                <i class="bi bi-truck"></i> Assignments
+            </a>
+        </li>
+
+        <li>
+            <a href="<?= url('delivery-tracking') ?>" class="nav-link <?= isActive('delivery-tracking') ?>">
+                <i class="bi bi-geo-alt"></i> Tracking
+            </a>
+        </li>
+
+        <li>
+            <a href="<?= url('delivery-status-histories') ?>" class="nav-link <?= isActive('delivery-status-histories') ?>">
+                <i class="bi bi-clock-history"></i> Status History
+            </a>
+        </li>
+
+        <li>
+            <a href="<?= url('delivery-proofs') ?>" class="nav-link <?= isActive('delivery-proofs') ?>">
+                <i class="bi bi-check-circle"></i> Proofs
+            </a>
+        </li>
+
     </ul>
 
     <a href="<?= url('auth/logout') ?>" class="btn btn-danger w-100 mt-3 d-flex align-items-center justify-content-center gap-2">

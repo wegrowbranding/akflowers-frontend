@@ -134,3 +134,29 @@ $router->post('wishlists/{id}/delete',  'WishlistController@destroy');
 // Notifications
 $router->get('notifications',            'NotificationController@index');
 $router->post('notifications/send',      'NotificationController@send');
+
+// Delivery Staff
+$router->get('delivery-staff',            'DeliveryStaffController@index');
+$router->get('delivery-staff/create',     'DeliveryStaffController@create');
+$router->post('delivery-staff/create',    'DeliveryStaffController@store');
+$router->get('delivery-staff/{id}/edit',  'DeliveryStaffController@edit');
+$router->post('delivery-staff/{id}/edit', 'DeliveryStaffController@update');
+$router->post('delivery-staff/{id}/delete','DeliveryStaffController@destroy');
+
+// Delivery Assignments
+$router->get('delivery-assignments',            'DeliveryAssignmentController@index');
+$router->get('delivery-assignments/create',     'DeliveryAssignmentController@create');
+$router->post('delivery-assignments/create',    'DeliveryAssignmentController@store');
+$router->get('delivery-assignments/{id}/edit',  'DeliveryAssignmentController@edit');
+$router->post('delivery-assignments/{id}/edit', 'DeliveryAssignmentController@update');
+$router->post('delivery-assignments/{id}/delete','DeliveryAssignmentController@destroy');
+
+// Delivery Status Histories
+$router->get('delivery-status-histories',       'DeliveryStatusHistoryController@index');
+
+// Delivery Proofs
+$router->get('delivery-proofs',                'DeliveryProofController@index');
+
+// Delivery Tracking
+$router->get('delivery-tracking',               'DeliveryTrackingController@index');
+$router->get('delivery-tracking/{id}',          'DeliveryTrackingController@show');
