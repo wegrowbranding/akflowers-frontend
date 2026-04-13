@@ -41,7 +41,7 @@ ob_start();
                     <label class="form-label fw-medium">Banner Image <span class="text-danger">*</span></label>
                     <div class="mb-3">
                         <input type="file" id="mediaUpload" class="form-control" accept="image/png, image/jpeg, image/jpg">
-                        <div class="form-text">Accepted format: png, jpg, jpeg (Max 10MB)</div>
+                        <div class="form-text">Accepted format: png, jpg, jpeg (Max 1MB)</div>
                     </div>
                     
                     <input type="hidden" name="image" id="media_id" value="<?= old('image', $banner['image'] ?? '') ?>" required>
@@ -90,6 +90,13 @@ $(function() {
         // Final check for image
         if (!file.type.startsWith('image/')) {
             alert('Only images are allowed!');
+            $(this).val('');
+            return;
+        }
+        
+        // Size check (1MB)
+        if (file.size > 1024 * 1024) {
+            alert('The file "' + file.name + '" exceeds the 1MB size limit!');
             $(this).val('');
             return;
         }

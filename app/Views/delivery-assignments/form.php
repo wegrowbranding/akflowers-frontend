@@ -58,7 +58,7 @@ ob_start();
                         <label class="form-label fw-semibold small">Status</label>
                         <select name="status" class="form-select form-select-sm" required>
                             <?php
-                                $statuses = ['assigned', 'accepted', 'picked_up', 'out_for_delivery', 'delivered', 'failed'];
+                                $statuses = ['assigned', 'accepted', 'picked_up', 'out_for_delivery', 'delivered', 'rejected'];
                                 foreach($statuses as $st): ?>
                                     <option value="<?= $st ?>" <?= ($old['status'] ?? $assignment['status'] ?? 'assigned') === $st ? 'selected' : '' ?>>
                                         <?= str_replace('_', ' ', ucfirst($st)) ?>

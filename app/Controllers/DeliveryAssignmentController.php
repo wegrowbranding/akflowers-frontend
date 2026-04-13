@@ -21,7 +21,7 @@ class DeliveryAssignmentController extends Controller {
 
     public function create(): void {
         requireAuth();
-        $orders = ApiClient::get('/orders/list', ['limit' => 1000], true)['data']['data'] ?? [];
+        $orders = ApiClient::get('/orders/list', ['limit' => 1000, 'unassigned_only' => 1], true)['data']['data'] ?? [];
         $staff = ApiClient::get('/delivery-staff/list', ['limit' => 1000], true)['data']['data'] ?? [];
         $this->view('delivery-assignments.form', compact('orders', 'staff') + ['assignment' => null, 'isEdit' => false]);
     }
@@ -37,7 +37,7 @@ class DeliveryAssignmentController extends Controller {
         }
 
         setOld($data);
-        $orders = ApiClient::get('/orders/list', ['limit' => 1000], true)['data']['data'] ?? [];
+        $orders = ApiClient::get('/orders/list', ['limit' => 1000, 'unassigned_only' => 1], true)['data']['data'] ?? [];
         $staff = ApiClient::get('/delivery-staff/list', ['limit' => 1000], true)['data']['data'] ?? [];
         $this->view('delivery-assignments.form', compact('orders', 'staff') + ['assignment' => null, 'isEdit' => false, 'errors' => $this->extractErrors($res)]);
     }

@@ -95,7 +95,7 @@ ob_start();
             
             <div class="mb-3">
                 <input type="file" id="mediaUpload" class="form-control" accept=".png,.jpg,.jpeg,.mp4" multiple>
-                <div class="form-text">Accepted format: png, jpg, jpeg, mp4 (Max 10MB)</div>
+                <div class="form-text">Accepted format: png, jpg, jpeg, mp4 (Max 1MB)</div>
             </div>
 
             <div id="mediaPreviews" class="d-flex flex-wrap gap-3">
@@ -153,6 +153,12 @@ $(function() {
         $('#btnSubmit').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Uploading...');
         
         for (let file of e.target.files) {
+            // Check file size (1MB)
+            if (file.size > 1024 * 1024) {
+                alert('File "' + file.name + '" exceeds the 1MB size limit!');
+                continue;
+            }
+            
             let formData = new FormData();
             formData.append('file', file);
             

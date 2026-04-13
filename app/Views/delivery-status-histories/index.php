@@ -67,7 +67,7 @@ ob_start();
                                     'picked_up'        => 'warning',
                                     'out_for_delivery' => 'primary',
                                     'delivered'        => 'success',
-                                    'failed'           => 'danger'
+                                    'rejected'           => 'danger'
                                 ];
                                 $cls = $statusClasses[$h['status']] ?? 'secondary';
                             ?>
